@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BroadcastPractice</string>
+    <string name="offline_msg">com.tomorrow_eyes.broadcastpractice.FORCE_OFFLINE</string>
+
+</resources>

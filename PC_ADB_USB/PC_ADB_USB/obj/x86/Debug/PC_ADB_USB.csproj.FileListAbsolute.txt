@@ -1,0 +1,17 @@
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\bin\Debug\PC_ADB_USB.exe
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\bin\Debug\PC_ADB_USB.pdb
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.AdbSocket.resources
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.Properties.Resources.resources
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.csproj.GenerateResource.Cache
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.exe
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.pdb
+D:\AndroidDevelop\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.csprojResolveAssemblyReference.cache
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\bin\Debug\PC_ADB_USB.exe
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\bin\Debug\PC_ADB_USB.pdb
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.csprojAssemblyReference.cache
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.AdbSocket.resources
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.Properties.Resources.resources
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.csproj.GenerateResource.cache
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.csproj.CoreCompileInputs.cache
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.exe
+D:\AndroidDev\PC_ADB_USB\PC_ADB_USB\obj\x86\Debug\PC_ADB_USB.pdb

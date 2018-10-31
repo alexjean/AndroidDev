@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ActivityTest</string>
+    <string name="app_title">初相見</string>
+    <string name="app_title2">第二面</string>
+    <string name="app_title3">對不起__沒有用</string>
+    <string name="to_see">欲相見</string>
+    <string name="no_see">不想見</string>
+    <string name="look_back">再回首</string>
+</resources>
