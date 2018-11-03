@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     AlexAdapter adapter;
-    List<AlexPhoneContact> contactsList = new ArrayList<AlexPhoneContact>();
+    List<AlexPhoneContact> contactsList = new ArrayList<>();
     final String permReadContact = Manifest.permission.READ_CONTACTS;
 
     @Override
