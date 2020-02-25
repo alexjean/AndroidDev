@@ -5,7 +5,11 @@
     <string name="strStart">開始</string>
     <string name="strZero">0000</string>
     <string name="strPause">暫停</string>
-    <string name="strReset">歸零</string>
+    <string name="strReset">重置</string>
     <string name="strLeave">離開</string>
     <string name="strNoSleep">不休眠</string>
+
+    <string name="hello_setup_fragment">設定倒數秒數</string>
+    <string name="strBtnSetup">設定</string>
+    <string name="secHint">59</string>
 </resources>

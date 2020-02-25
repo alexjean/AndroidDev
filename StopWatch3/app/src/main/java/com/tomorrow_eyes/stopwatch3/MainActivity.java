@@ -5,23 +5,36 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+import com.tomorrow_eyes.stopwatch3.SetupFragment.SetSeconds;
+
+public class MainActivity extends AppCompatActivity implements SetSeconds {
+
 
 	Timer timer=null;
 	TimerTask task=null;
-	int count=0;
+	int maxCount = 59;
+	int countSeconds = maxCount;
+
+	public void setSeconds(int seconds) {
+		this.maxCount = seconds;
+		this.countSeconds = seconds;
+		ShowCount();
+	}
+
 	MediaPlayer mPlayer;
 	
     @Override
@@ -38,8 +51,14 @@ public class MainActivity extends AppCompatActivity {
 		}
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
-    
-    @Override
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		ShowCount();
+	}
+
+	@Override
     protected void onPause( ) {
     	KillTimerAndTask();
     	super.onPause();
@@ -60,26 +79,40 @@ public class MainActivity extends AppCompatActivity {
 				finish();
 				break;
 			case R.id.actionSettings:
-				Toast.makeText(this,"設定尚未完工",Toast.LENGTH_SHORT).show();
+				addFragment();
+				//Toast.makeText(this,"設定尚未完工",Toast.LENGTH_SHORT).show();
 		}
 		return true;
 	}
 
+	private void addFragment() {
+    	final String tag="SetupFragment";
+    	FragmentManager fragManager = getSupportFragmentManager();
+		if (fragManager.findFragmentByTag(tag) == null) {
+			FragmentTransaction transaction = fragManager.beginTransaction();
+			transaction.add(R.id.setupContainer, SetupFragment.newInstance(maxCount), tag);
+			transaction.addToBackStack(null);
+			transaction.commit();
+		}
+	}
+
 	private void ShowCount(){
     	TextView textView=(TextView)findViewById(R.id.textViewSeconds);
-    	textView.setText(String.valueOf(count));
+    	textView.setText(String.valueOf(countSeconds));
     }
 
     @SuppressLint("HandlerLeak")
 	final Handler handler=new Handler() {
     	public void handleMessage(Message msg){
-    		switch (msg.what) {
-    		case 49: count++;
-    				 ShowCount();
-    				 if ((count%30)==0) {
-    					 mPlayer.start();
-    				 }
-    				 break;
+    		if (msg.what == 49) {
+    		     countSeconds--;
+    			 ShowCount();
+    			 if (countSeconds <= 0) {
+                    if (countSeconds > -10)
+                        mPlayer.start();
+                    else
+                        KillTimerAndTask();
+                 }
     		}
     	}
     };
@@ -118,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnClickReset_Event(View view) {
     	KillTimerAndTask();
-    	count=0;
+    	countSeconds = maxCount;
     	ShowCount();
     }
     
