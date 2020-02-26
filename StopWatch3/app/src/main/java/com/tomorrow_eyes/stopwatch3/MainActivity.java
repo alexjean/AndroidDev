@@ -12,21 +12,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import com.tomorrow_eyes.stopwatch3.SetupFragment.SetSeconds;
+import com.tomorrow_eyes.stopwatch3.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements SetSeconds {
 
 
 	Timer timer=null;
 	TimerTask task=null;
-	int maxCount = 59;
+	int maxCount = 15;
 	int countSeconds = maxCount;
 
 	public void setSeconds(int seconds) {
@@ -36,11 +35,16 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 	}
 
 	MediaPlayer mPlayer;
-	
+
+	private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//      setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         mPlayer=MediaPlayer.create(this,R.raw.heaven);
         try {
 			mPlayer.prepare();
@@ -97,8 +101,10 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 	}
 
 	private void ShowCount(){
-    	TextView textView=(TextView)findViewById(R.id.textViewSeconds);
-    	textView.setText(String.valueOf(countSeconds));
+    	String str = String.valueOf(countSeconds);
+    	// TextView textView=(TextView)findViewById(R.id.textViewSeconds);
+    	// textView.setText(str);
+		binding.textViewSeconds.setText(str);
     }
 
     @SuppressLint("HandlerLeak")
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
     	if (timer!=null) {
     		return;
     	}
+    	countSeconds = maxCount;
     	timer=new Timer(true);
     	newTask();
     	timer.schedule(task, 1000,1000);
