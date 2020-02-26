@@ -26,6 +26,7 @@ public class SetupFragment extends Fragment {
         void setSeconds(int seconds);
     }
 
+
     private static final String strSeconds = "Seconds";
 
     private int iSeconds;
@@ -41,12 +42,17 @@ public class SetupFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button btn= mActivity.findViewById(R.id.btnSetup);
-        btn.setOnClickListener(new View.OnClickListener() {
+        // Button btn= mActivity.findViewById(R.id.btnSetup);
+        // btn.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        EditText editText = mActivity.findViewById(R.id.editSeconds);
+        //        String str = editText.getText().toString();
+
+        binding.btnSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText editText = mActivity.findViewById(R.id.editSeconds);
-                String str = editText.getText().toString();
+                String str = binding.editSeconds.getText().toString();
                 if (mSetSeconds != null) {
                     iSeconds = Integer.parseInt(str);
                     mSetSeconds.setSeconds(iSeconds);

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,13 +27,14 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 
 	Timer timer=null;
 	TimerTask task=null;
-	int maxCount = 15;
-	int countSeconds = maxCount;
+	int maxCount ;
+	int counter;
 
 	public void setSeconds(int seconds) {
 		this.maxCount = seconds;
-		this.countSeconds = seconds;
+		this.counter = seconds;
 		ShowCount();
+		WriteToFile(counter);
 	}
 
 	MediaPlayer mPlayer;
@@ -45,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        maxCount = ReadFromFile();
+        if (maxCount <=0)
+        	maxCount = 15;
+        counter = maxCount;
         mPlayer=MediaPlayer.create(this,R.raw.heaven);
         try {
 			mPlayer.prepare();
@@ -101,20 +108,54 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 	}
 
 	private void ShowCount(){
-    	String str = String.valueOf(countSeconds);
+    	String str = String.valueOf(counter);
     	// TextView textView=(TextView)findViewById(R.id.textViewSeconds);
     	// textView.setText(str);
 		binding.textViewSeconds.setText(str);
     }
 
+    private void WriteToFile(int seconds) {
+    	String fileName = getExternalFilesDir(null) + "/config.dat";
+		FileOutputStream stream = null;
+		try {
+			byte[] buf = Integer.toString(seconds).getBytes();
+			stream = new FileOutputStream(fileName, false);
+			if (stream != null) stream.write(buf);
+			stream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private int ReadFromFile() {
+		String fileName = getExternalFilesDir(null) + "/config.dat";
+		FileInputStream stream = null;
+		int i = 0;
+		try {
+			byte[] buf = new byte[256];
+			stream = new FileInputStream(fileName);
+			if (stream != null) {
+				i = stream.read(buf, 0, 250);
+				stream.close();
+				if (i > 0) {
+					String str = new String(buf, 0, i);
+					i = Integer.parseInt(str);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return i;
+	}
+
     @SuppressLint("HandlerLeak")
 	final Handler handler=new Handler() {
     	public void handleMessage(Message msg){
     		if (msg.what == 49) {
-    		     countSeconds--;
+    		     counter--;
     			 ShowCount();
-    			 if (countSeconds <= 0) {
-                    if (countSeconds > -10)
+    			 if (counter <= 0) {
+                    if (counter > -10)
                         mPlayer.start();
                     else
                         KillTimerAndTask();
@@ -148,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
     	if (timer!=null) {
     		return;
     	}
-    	countSeconds = maxCount;
+    	counter = maxCount;
     	timer=new Timer(true);
     	newTask();
     	timer.schedule(task, 1000,1000);
@@ -158,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 
     public void OnClickReset_Event(View view) {
     	KillTimerAndTask();
-    	countSeconds = maxCount;
+    	counter = maxCount;
     	ShowCount();
     }
     
