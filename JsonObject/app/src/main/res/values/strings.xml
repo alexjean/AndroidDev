@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Json Object</string>
+    <string name="btnRequest">Request</string>
+    <string name="runServerHint">Please Run JsonObjectServer on PC 192.168.88.254</string>
+</resources>
