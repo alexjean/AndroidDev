@@ -1,5 +1,6 @@
 package com.tomorrow_eyes.json_object;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,10 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
+	
+	@Column(length = 64, nullable = false)
 	String version;
+	@Column(length = 128, nullable = false)
 	String name;	
 	
 	public Integer getId() {

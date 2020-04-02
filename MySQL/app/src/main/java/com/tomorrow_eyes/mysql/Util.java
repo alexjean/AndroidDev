@@ -12,21 +12,24 @@ import java.sql.Statement;
 public class Util {
 
     private static String TAG = "JDBC.Util";
-    public static Connection openConnection(String url, String user,
-                                            String password) {
-        Connection conn = null;
-        try {
-            final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
-            Class.forName(DRIVER_NAME);
-            conn = DriverManager.getConnection(url, user, password);
-        } catch (ClassNotFoundException e) {
-            conn = null;
-        } catch (SQLException e) {
-            conn = null;
-            Log.d(TAG, "SQLException:"+e.toString());
-        }
+    public static Connection openConnection(String url, String user, String password) {
 
-        return conn;
+        Connection connMySQL = null;
+        final String DRIVER_NAME = "com.mysql.jdbc.Driver";
+        try {
+            Class.forName(DRIVER_NAME);  // 动态加载类
+            try {
+                connMySQL = DriverManager.getConnection(url, user, password);
+                Log.d(TAG, "connected");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Log.d(TAG, "not connected: "+e.getMessage());
+            }
+        } catch (ClassNotFoundException e) {
+            Log.d(DRIVER_NAME, "NOT found");
+            e.printStackTrace();
+        }
+        return connMySQL;
     }
 
     public static void query(Connection conn, String sql) {

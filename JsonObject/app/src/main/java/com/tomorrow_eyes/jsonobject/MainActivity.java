@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         String id = jsonObject.getString("id");
                         String name = jsonObject.getString("name");
                         String version = jsonObject.getString("version");
-                        String msg = "id<" + id + "> name="+ name +", ver=" + version;
+                        String msg = "id<" + id +"> ver=" + version+ ", name="+ name;
                         Log.d("MainActivity", msg);
                         sb.append(msg); sb.append("\r\n");
                     }
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }

@@ -9,17 +9,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String REMOTE_IP="119.23.34.93";
-    private static final String URL = "jdbc:mysql://" + REMOTE_IP +"/alex";
+    private static final String REMOTE_IP="192.168.88.254:3306";
+    private static final String URL = "jdbc:mysql://" + REMOTE_IP +"/db_example" ;
     private static final String USER = "alex";
-    private static final String PASSWORD = "CalcVoucher888";
+    private static final String PASSWORD = "loveyou";
 
-    private Connection conn;
+    private Connection connMySQL;
     int RequestCode = 0x3306;  // for mysql
     static String TAG = "LoadALex";
 
@@ -52,16 +53,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onConn(View view) {
-        conn = Util.openConnection(URL, USER, PASSWORD);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connMySQL = Util.openConnection(URL, USER, PASSWORD);
+            }
+        }).start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (conn!=null) {
-            try { conn.close(); }
-            catch (SQLException e) {   conn = null;   }
-            finally {  conn = null;   }
+        if (connMySQL !=null) {
+            try { connMySQL.close(); }
+            catch (SQLException e) {   connMySQL = null;   }
+            finally {  connMySQL = null;   }
         }
     }
 }
