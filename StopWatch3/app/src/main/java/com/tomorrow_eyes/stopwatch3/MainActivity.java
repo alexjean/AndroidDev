@@ -4,10 +4,11 @@ import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,12 +56,10 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
         mPlayer=MediaPlayer.create(this,R.raw.heaven);
         try {
 			mPlayer.prepare();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
 	@Override
@@ -109,18 +108,18 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 
 	private void ShowCount(){
     	String str = String.valueOf(counter);
-    	// TextView textView=(TextView)findViewById(R.id.textViewSeconds);
-    	// textView.setText(str);
+		// TextView textView=(TextView)findViewById(R.id.textViewSeconds);
+		// textView.setText(str);
 		binding.textViewSeconds.setText(str);
     }
 
     private void WriteToFile(int seconds) {
     	String fileName = getExternalFilesDir(null) + "/config.dat";
-		FileOutputStream stream = null;
+		FileOutputStream stream;
 		try {
 			byte[] buf = Integer.toString(seconds).getBytes();
 			stream = new FileOutputStream(fileName, false);
-			if (stream != null) stream.write(buf);
+			stream.write(buf);
 			stream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -129,18 +128,16 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 
 	private int ReadFromFile() {
 		String fileName = getExternalFilesDir(null) + "/config.dat";
-		FileInputStream stream = null;
+		FileInputStream stream;
 		int i = 0;
 		try {
 			byte[] buf = new byte[256];
 			stream = new FileInputStream(fileName);
-			if (stream != null) {
-				i = stream.read(buf, 0, 250);
-				stream.close();
-				if (i > 0) {
-					String str = new String(buf, 0, i);
-					i = Integer.parseInt(str);
-				}
+			i = stream.read(buf, 0, 250);
+			stream.close();
+			if (i > 0) {
+				String str = new String(buf, 0, i);
+				i = Integer.parseInt(str);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -149,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements SetSeconds {
 	}
 
     @SuppressLint("HandlerLeak")
-	final Handler handler=new Handler() {
+	final Handler handler=new Handler(Looper.getMainLooper()) {
     	public void handleMessage(Message msg){
     		if (msg.what == 49) {
     		     counter--;
